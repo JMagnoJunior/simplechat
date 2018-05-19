@@ -14,12 +14,13 @@ export default class ChatPanel extends Component {
 
     constructor(){
         super();
+        let user_logged = JSON.parse(sessionStorage.getItem('user'))
         this.state = { 
             messages : store.getState().messages,
-            user : store.getState().user,
+            user : (user_logged != null) ? user_logged: store.getState().user,
             inputUserName : "",
             inputNewMessage: "",
-            logged: false,
+            logged: (user_logged != null) ? true : false,
             currentCount: RELOAD_TIME,
         }
     }
@@ -36,7 +37,8 @@ export default class ChatPanel extends Component {
 
     handleClickLogin = (dispatch, login) => {
         dispatch(login({sender_name: this.state.inputUserName}))
-        .then( () => {                        
+        .then( () => { 
+            sessionStorage.setItem("user", JSON.stringify(store.getState().user) )
             this.setState({logged: true, user: store.getState().user})
         })
         .catch((err) => {

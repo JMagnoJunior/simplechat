@@ -14,7 +14,6 @@ export function LoginPanel(props){
     )
 }
 
-
 export default connect(
     state => state,
     (dispatch, props) => ({

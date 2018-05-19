@@ -44,9 +44,7 @@ export function listMessages(){
         dispatch({
             type: "LIST_MESSAGES",
             data: { messages: result }
-        })
-
-           
+        })      
     })
     .catch( (err)=> {
         console.log(err)
