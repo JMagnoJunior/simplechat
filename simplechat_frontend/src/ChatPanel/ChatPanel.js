@@ -19,10 +19,25 @@ export default class ChatPanel extends Component {
             messages : store.getState().messages,
             user : (user_logged != null) ? user_logged: store.getState().user,
             inputUserName : "",
+            errorInputUserName : "",
             inputNewMessage: "",
             logged: (user_logged != null) ? true : false,
             currentCount: RELOAD_TIME,
         }
+    }
+
+    isUserValid() {
+        let result = false;
+        if(this.state.inputUserName.length <= 0){
+            console.log("erromermo")
+            this.setState({errorInputUserName: "Invalid User Name" } )
+            result = false;
+        }else{
+            result = true
+            this.setState({errorInputUserName: "" } )
+        }   
+        console.log(result)     
+        return result;
     }
 
     componentWillMount() {        
@@ -36,14 +51,16 @@ export default class ChatPanel extends Component {
     }
 
     handleClickLogin = (dispatch, login) => {
-        dispatch(login({sender_name: this.state.inputUserName}))
-        .then( () => { 
-            sessionStorage.setItem("user", JSON.stringify(store.getState().user) )
-            this.setState({logged: true, user: store.getState().user})
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+        if(this.isUserValid()){
+            dispatch(login({sender_name: this.state.inputUserName}))
+            .then( () => {                 
+                this.setState({logged: true, user: store.getState().user})
+                sessionStorage.setItem("user", JSON.stringify(this.state.user) )
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
     }
 
     handleClickSendMessage = (dispatch, message, sendMessage) => {
@@ -94,11 +111,11 @@ export default class ChatPanel extends Component {
 
         if(this.state.logged){
             panel = (
-                <div>
+                <div className="container">
                     <MessagePanel  messages={this.state.messages} 
                                    user={this.state.user} 
                                    />
-
+                    
                     <ChatPanelController
                                          input_newmessage={this.state.inputNewMessage} 
                                          handle_change_message={this.handleChangeMessage}
@@ -110,7 +127,8 @@ export default class ChatPanel extends Component {
             panel = (
                 <LoginPanel handle_click_login={this.handleClickLogin} 
                             handle_change_username={this.handleChangeUserName} 
-                            input_username={this.state.inputUserName}/>
+                            input_username={this.state.inputUserName} error_msg={this.state.errorInputUserName} />
+                
             )
         }
 

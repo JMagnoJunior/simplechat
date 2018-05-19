@@ -1,4 +1,5 @@
-import React from "react"; 
+import React from "react";
+import Moment from 'moment';
 
 export default class  Message extends React.Component {
 
@@ -11,8 +12,11 @@ export default class  Message extends React.Component {
     }
 
     componentWillMount() {        
-         fetch(this.props.sender.href).then((result) => {             
-            result.json().then( (sender) => {
+        
+         
+         fetch(this.props.sender.href).then((result) => {                         
+            result.json()
+            .then( (sender) => {
                 if(this.state.sender!= sender){
                     if(sender._links.self.href == this.props.user._links.self.href){
                         this.setState({sender: sender, sender_message: true})
@@ -20,7 +24,10 @@ export default class  Message extends React.Component {
                         this.setState({sender: sender, sender_message: false})
                     }                    
                  } 
-            } )                      
+            } )
+            .catch( (err) => {
+                console.log(err)
+            })                      
          })       
     }
 
@@ -28,31 +35,34 @@ export default class  Message extends React.Component {
     }
     
     render = () => {
+        Moment.locale('en');
+
         let displayMessage = null;
         
         if(this.state.sender_message){
             displayMessage = (
-                <div class="card">
-                    <div class="card-header  bg-primary ">{this.state.sender.name}</div> 
-                    <div class="card-body">                                        
-                        <div>{this.props.content}</div>
-                        
-                    </div>
-                    <div class="card-footer bg-transparent">{this.props.when}</div>
+                <div className="card col m-3">
+                    <div className="card-header bg-info ">{this.state.sender.name}</div> 
+                    <div className="card-body">                                        
+                        <div>{this.props.content}</div>                        
+                    </div>                    
+                    <div className="card-footer bg-transparent">{Moment(this.props.when).format('MMMM Do YYYY, h:mm:ss a')}</div>
                 </div>
             )
         }else{
             displayMessage = ( 
-                <div>    
-                    <div>{this.state.sender.name}</div>
-                    <div>{this.props.content}</div>
-                    <div>{this.props.when} </div>
-                </div>
+            <div className="card col m-3 bg-light">
+                <div className="card-header bg-secondary">{this.state.sender.name}</div> 
+                <div className="card-body">                                        
+                    <div>{this.props.content}</div>                    
+                </div>                
+                <div className="card-footer bg-transparent">{Moment(this.props.when).format('MMMM Do YYYY, h:mm:ss a')}</div>
+            </div>
             )
         }
 
-        return (
-            displayMessage
+        return (            
+             displayMessage             
         )
     }
 }

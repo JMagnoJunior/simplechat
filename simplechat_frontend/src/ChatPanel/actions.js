@@ -17,21 +17,31 @@ export function sendMessage( {message, sender } ){
     return dispatch => 
     instance.post("messages", message)
     .then( (response) => {
+        console.log("aqui 0")  
             if(response.status == CREATED){
+                console.log("aqui 1")  
                 return axios({method: 'PUT',
                         headers: { 'content-type': 'text/uri-list' } ,
                         url: response.data._links.sender.href, 
                         data: sender._links.self.href
                     })
-                .then( (response) => {
-                    return dispatch({
-                        type: "SEND_MESSAGE",
-                        data: { success : "true" }
-                    })
-                })                
-            }            
+                            
+            }else{
+                console.log("nao crious")
+                throw "Error Creating User"
+            }
+        
         }
-    )
+    ).then( (response) => {      
+        console.log("aqui 2")  
+        return dispatch({
+            type: "SEND_MESSAGE",
+            data: { success : "true" }
+        })
+    })
+    .catch((err) => {
+        console.log(err)
+    } ) 
 }
 
 export function listMessages(){

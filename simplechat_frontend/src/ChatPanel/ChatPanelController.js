@@ -4,9 +4,13 @@ import {sendMessage} from "./actions"
 
 export  function ChatPanelController(props){
     return(
-        <div>
-             <input onChange={props.messageChange} value={props.input_newmessage} /> 
-             <button onClick={props.sendMessageClick} > Send </button>
+        <div className="m-3">                            
+            <div className="row mb-1">
+                <input type="text"  placeholder="say something..." className="form-control" onChange={props.messageChange} value={props.input_newmessage} /> 
+            </div>
+            <div className="row">
+                <button className="btn-primary btn-lg btn-block" onClick={props.sendMessageClick} > Send </button>
+            </div>
         </div>
     )
 }
