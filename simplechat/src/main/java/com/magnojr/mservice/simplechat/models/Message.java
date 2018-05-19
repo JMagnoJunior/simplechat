@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 @Entity
 public class Message {
 
@@ -21,6 +24,7 @@ public class Message {
 	@NotNull
 	@Size(min = 1, message = "A message should have at least one character")
 	private String content;
+	@JsonProperty(access = Access.READ_ONLY)
 	private LocalDateTime when;
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_sender")
@@ -36,6 +40,7 @@ public class Message {
 
 	public Message() {
 		super();
+		this.when = LocalDateTime.now();
 	}
 
 	public Long getId() {
@@ -68,6 +73,11 @@ public class Message {
 
 	public void setSender(Sender sender) {
 		this.sender = sender;
+	}
+	
+	public void send(){
+		
+		this.setWhen(LocalDateTime.now());
 	}
 
 }
