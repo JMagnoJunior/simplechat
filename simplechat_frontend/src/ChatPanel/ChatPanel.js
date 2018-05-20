@@ -87,7 +87,7 @@ export default class ChatPanel extends Component {
     reloadState = () => {
         store.dispatch(listMessages())
         .then( () => { 
-            if(this.state.messages != store.getState().messages){
+            if(this.state.messages !== store.getState().messages){
                 this.setState({messages: store.getState().messages })
             }  
         })        

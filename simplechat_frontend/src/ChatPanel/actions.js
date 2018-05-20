@@ -2,24 +2,17 @@ import axios from "axios"
 
 const CREATED = 201
 
-var instance = axios.create({
-    // baseURL:  process.env.REACT_APP_SIMPLECHAT_SERVICE_URI  ,
-    baseURL:  "http://localhost:8080/"
-    // auth: {
-    //     username: 'user1',
-    //     password: '123'
-    // },
+var instance = axios.create({    
+    baseURL:  (process.env.REACT_APP_SIMPLECHAT_SERVICE)? process.env.REACT_APP_SIMPLECHAT_SERVICE: "http://localhost:8080/"
     
   });
 
-export function sendMessage( {message, sender } ){
-    
+export function sendMessage( {message, sender } ){    
+
     return dispatch => 
     instance.post("messages", message)
     .then( (response) => {
-        console.log("aqui 0")  
-            if(response.status == CREATED){
-                console.log("aqui 1")  
+            if(response.status === CREATED){
                 return axios({method: 'PUT',
                         headers: { 'content-type': 'text/uri-list' } ,
                         url: response.data._links.sender.href, 
@@ -27,13 +20,11 @@ export function sendMessage( {message, sender } ){
                     })
                             
             }else{
-                console.log("nao crious")
-                throw "Error Creating User"
+                throw new Error("Error Creating User")
             }
         
         }
     ).then( (response) => {      
-        console.log("aqui 2")  
         return dispatch({
             type: "SEND_MESSAGE",
             data: { success : "true" }

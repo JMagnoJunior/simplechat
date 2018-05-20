@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  simplechat-frontend:
+    build:
+      context: ./simplechat_frontend
+    ports:
+      - 3000:3000
+    environment:
+      - REACT_APP_SIMPLECHAT_SERVICE=http://localhost:8080/
+    depends_on: 
+      - simplechat-service
+    restart: on-failure
+
+  simplechat-service:
+    build:
+      context: ./simplechat
+    ports:
+      - 8080:8080
+    restart: on-failure
+    
+
+    

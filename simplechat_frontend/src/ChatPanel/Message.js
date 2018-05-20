@@ -15,8 +15,8 @@ export default class  Message extends React.Component {
          fetch(this.props.sender.href).then((result) => {                         
             result.json()
             .then( (sender) => {
-                if(this.state.sender != sender){
-                    if(sender._links.self.href == this.props.user._links.self.href){
+                if(this.state.sender !== sender){
+                    if(sender._links.self.href === this.props.user._links.self.href){
                         this.setState({sender: sender, sender_message: true})
                     }else{
                         this.setState({sender: sender, sender_message: false})

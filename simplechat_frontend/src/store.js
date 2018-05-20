@@ -2,15 +2,13 @@ import { createStore, applyMiddleware } from "redux"
 // const { List } = require('immutable')
 
 const initialState = {
-
     messages: [],
-    user: null,
-    
+    user: null
 }
 
 function sendMessage(state, action){
-    if(action.data.success != "true"){
-        throw "invalid message"
+    if(action.data.success !== "true"){
+        throw new Error("invalid message")
     }
     return state
 }
@@ -39,7 +37,7 @@ const logger = store => next => action =>  {
     console.log("current state: ")
     console.log(store.getState())
     
-    const result = next(action)
+    next(action)
     console.log("next state: ")
     console.log(store.getState())
     console.log("==========")   
