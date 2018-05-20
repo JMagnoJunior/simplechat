@@ -21,11 +21,8 @@ export function LoginPanel(props){
                         <button id="login-btn" className="btn btn-primary" onClick={props.loginClick} > Enter </button> 
                         <p id="error-msg" className="invalid-feedback" >{ props.error_msg }</p> 
                     </div>
-                    
                 </div>
-                
-                
-            
+
     )
 }
 
