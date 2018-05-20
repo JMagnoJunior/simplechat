@@ -34,5 +34,7 @@ I am not sure if I should put all my state there or but for now it is working we
    
 # How to run this application?
 Using docker you can just run the command below and wait
-''' docker-compose up --build '''
+``` 
+docker-compose up --build 
+```
 
