@@ -32,3 +32,7 @@ I am not sure if I should put all my state there or but for now it is working we
    Message.js -> It will render the message and it has its own state. When a message is loaded, we have only the URI for its sender. We need to fetch the sender information and save this information as a state in this component.
    MessagePanel.js -> It just list all the Message components.
    
+# How to run this application?
+Using docker you can just run the command below and wait
+''' docker-compose up --build '''
+
