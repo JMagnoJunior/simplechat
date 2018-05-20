@@ -112,7 +112,7 @@ export default class ChatPanel extends Component {
 
         if(this.state.logged){
             panel = (
-                <div className="container">
+                <Fragment> 
                     <MessagePanel  messages={this.state.messages} 
                                    user={this.state.user} 
                                    />
@@ -123,14 +123,27 @@ export default class ChatPanel extends Component {
                                          handle_change_message={this.handleChangeMessage}
                                          handle_click_sendmessage={this.handleClickSendMessage} 
                                          />
-                </div>
+                </Fragment> 
             )
         }else{
             panel = (
-                <LoginPanel handle_click_login={this.handleClickLogin} 
+                
+                <Fragment> 
+                    <p > 
+                        This is the simplechat app and here are some things that worth to mention:                    
+                    <ul>
+                       <li> Many users can have the same name. it will be identified by its resource uri; </li>
+                       <li> I am not using websocket in this example. It use simple a timer to load new messages; </li>
+                       <li> The back end with spring boot is ridiculous simple, but it has everything that we need to support this app; </li>
+                       <li> This layout is awful;</li>
+                    </ul>
+                    </p>
+                    
+                    <LoginPanel handle_click_login={this.handleClickLogin} 
                             handle_change_username={this.handleChangeUserName} 
                             input_username={this.state.inputUserName} 
                             error_msg={this.state.errorInputUserName} />
+                </Fragment> 
                 
             )
         }
@@ -139,7 +152,10 @@ export default class ChatPanel extends Component {
                 <div> 
                     <Provider store={store}>                        
                         <Fragment> 
+                        <div className="container">
+                            <h2> Simple Chat </h2>
                             { panel }
+                        </div>
                         </Fragment>
                     </Provider>
                 </div>            

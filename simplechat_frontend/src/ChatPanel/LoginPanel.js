@@ -5,14 +5,27 @@ import { login } from "./actions"
 
 
 export function LoginPanel(props){
+
+    let input = null
+    if(props.error_msg){
+        input = <input id="login-input" type="text" className="form-control is-invalid"  placeholder="What's your name?" onChange={props.userNameChange} value={props.input_user_name} />
+    }else{
+        input = <input id="login-input" type="text" className="form-control"  placeholder="What's your name?" onChange={props.userNameChange} value={props.input_user_name} />
+    }
+
     return(
-        <div>
-            <label> What your name? </label>
-            <input id="login-input" onChange={props.userNameChange} value={props.input_user_name} />
-            <button id="login-btn" onClick={props.loginClick} > Enter </button> 
-            <br />
-            <p id="error-msg" className="text-danger" >{ props.error_msg }</p>
-        </div>
+                
+                <div className="form-inline">
+                    <div className="form-group mb-2 col">
+                        { input }                        
+                        <button id="login-btn" className="btn btn-primary" onClick={props.loginClick} > Enter </button> 
+                        <p id="error-msg" className="invalid-feedback" >{ props.error_msg }</p> 
+                    </div>
+                    
+                </div>
+                
+                
+            
     )
 }
 
