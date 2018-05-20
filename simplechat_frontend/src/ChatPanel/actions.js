@@ -41,6 +41,10 @@ export function sendMessage( {message, sender } ){
     })
     .catch((err) => {
         console.log(err)
+        return dispatch({
+            type: "SEND_MESSAGE",
+            data: { success : "false" }
+        })
     } ) 
 }
 

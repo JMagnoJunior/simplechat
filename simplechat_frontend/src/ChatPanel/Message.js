@@ -12,12 +12,10 @@ export default class  Message extends React.Component {
     }
 
     componentWillMount() {        
-        
-         
          fetch(this.props.sender.href).then((result) => {                         
             result.json()
             .then( (sender) => {
-                if(this.state.sender!= sender){
+                if(this.state.sender != sender){
                     if(sender._links.self.href == this.props.user._links.self.href){
                         this.setState({sender: sender, sender_message: true})
                     }else{
@@ -28,10 +26,13 @@ export default class  Message extends React.Component {
             .catch( (err) => {
                 console.log(err)
             })                      
+         }).catch((err) => {
+            console.log(err)
          })       
     }
 
-    componentWillUnmount() {        
+    componentWillUnmount() {
+
     }
     
     render = () => {

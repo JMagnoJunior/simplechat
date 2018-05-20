@@ -9,6 +9,9 @@ const initialState = {
 }
 
 function sendMessage(state, action){
+    if(action.data.success != "true"){
+        throw "invalid message"
+    }
     return state
 }
 
@@ -16,8 +19,7 @@ function listMessages(state, action){
     return {...state, messages: action.data.messages}
 }
 
-function login(state, action){
-    
+function login(state, action){    
     return {...state, user: action.data.user }
 }
 

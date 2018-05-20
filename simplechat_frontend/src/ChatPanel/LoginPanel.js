@@ -8,10 +8,10 @@ export function LoginPanel(props){
     return(
         <div>
             <label> What your name? </label>
-            <input onChange={props.userNameChange} value={props.input_user_name} />
-            <button onClick={props.loginClick} > Enter </button> 
+            <input id="login-input" onChange={props.userNameChange} value={props.input_user_name} />
+            <button id="login-btn" onClick={props.loginClick} > Enter </button> 
             <br />
-            <p className="text-danger" >{ props.error_msg } </p>
+            <p id="error-msg" className="text-danger" >{ props.error_msg }</p>
         </div>
     )
 }

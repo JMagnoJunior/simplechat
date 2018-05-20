@@ -19,8 +19,9 @@ export default class ChatPanel extends Component {
             messages : store.getState().messages,
             user : (user_logged != null) ? user_logged: store.getState().user,
             inputUserName : "",
-            errorInputUserName : "",
+            errorInputUserName : "",            
             inputNewMessage: "",
+            errorInputMessage : "",
             logged: (user_logged != null) ? true : false,
             currentCount: RELOAD_TIME,
         }
@@ -29,7 +30,6 @@ export default class ChatPanel extends Component {
     isUserValid() {
         let result = false;
         if(this.state.inputUserName.length <= 0){
-            console.log("erromermo")
             this.setState({errorInputUserName: "Invalid User Name" } )
             result = false;
         }else{
@@ -67,10 +67,11 @@ export default class ChatPanel extends Component {
         
         dispatch(sendMessage({ message: {content: this.state.inputNewMessage}, sender: this.state.user }))
         .then( (result) => {
-            this.setState({inputNewMessage : "" })
+            this.setState({inputNewMessage : "", errorInputMessage : "" })
             this.reloadState()
         })
         .catch( (err) => {
+            this.setState({errorInputMessage : err })
             console.log(err)
         });
     }
@@ -117,7 +118,8 @@ export default class ChatPanel extends Component {
                                    />
                     
                     <ChatPanelController
-                                         input_newmessage={this.state.inputNewMessage} 
+                                         input_newmessage={this.state.inputNewMessage}
+                                         show_error={this.state.errorInputMessage}
                                          handle_change_message={this.handleChangeMessage}
                                          handle_click_sendmessage={this.handleClickSendMessage} 
                                          />
@@ -127,7 +129,8 @@ export default class ChatPanel extends Component {
             panel = (
                 <LoginPanel handle_click_login={this.handleClickLogin} 
                             handle_change_username={this.handleChangeUserName} 
-                            input_username={this.state.inputUserName} error_msg={this.state.errorInputUserName} />
+                            input_username={this.state.inputUserName} 
+                            error_msg={this.state.errorInputUserName} />
                 
             )
         }
